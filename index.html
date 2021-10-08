@@ -5,61 +5,64 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        div{
-            padding:18px;
-            border: 10px solid black;
-            margin:20px;
-        }
-
-        ol li{
-            list-style-position: inside;
-            background-color:gray;
-            margin-bottom: 5px;
-        }
-
-        a:hover{
-            background-color: aqua;
-        }
-        a:visited{
-            background-color:chartreuse;
-        }
-
-    </style>
 </head>
 <body>
+    Email:<input type="email" name="" id="email">
+    <br>
+    Password:<input type="password" name="" id="password">
+    <br>
+    <button id="signup">Sign Up</button>
+    <button id="login">Sign in with google</button>
 
-    <div style="color:red;font-size: larger;">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam suscipit veritatis aliquam necessitatibus quia tempora cum amet officiis deleniti. Illo, voluptate. Cumque quia eveniet repudiandae veritatis eum pariatur nesciunt quasi velit maxime, quae incidunt dignissimos placeat, aspernatur adipisci consectetur laborum, id enim praesentium cupiditate nemo aperiam necessitatibus laudantium magnam fugit! Error nam repudiandae sit. Vitae officia esse ad corrupti incidunt pariatur quis recusandae dignissimos magnam molestiae, reiciendis earum enim blanditiis provident repellendus at optio aut non possimus doloremque hic veniam placeat? Maiores necessitatibus deleniti nemo, neque tempora ipsa et minus odio, nobis tempore quo rem quaerat eligendi, id consequatur suscipit!
-    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
+        import { getAuth, signInWithPopup,createUserWithEmailAndPassword,GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
+        
+        const firebaseConfig = {
+        apiKey: "AIzaSyBjOPwjK1CUjv2hM2qn3143FK8mulGsvPY",
+        authDomain: "iter-survey.firebaseapp.com",
+        databaseURL: "https://iter-survey-default-rtdb.firebaseio.com",
+        projectId: "iter-survey",
+        storageBucket: "iter-survey.appspot.com",
+        messagingSenderId: "222064254567",
+        appId: "1:222064254567:web:159cd90b781b60dca23ec2",
+        measurementId: "G-N6ZWES9XN7"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider(app);
+        
+        document.getElementById("login").addEventListener('click',function(){
+            signInWithPopup(auth, provider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                // ...
+                console.log(user.displayName);
+                console.log(user.uid);
+                console.log(user.photoURL);
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+                console.log("not found");
+            });
 
-    <h3>ordered list</h3>
-
-   <ol type="I">
-    <li>second</li>
-    <li>third</li>
-    <li>fourth</li>
-   </ol>
-
-   <hr>
-
-   <h3>unordered list</h3>
-
-   <ul>
-    <li>first</li>
-    <li>second</li>
-    <li>third</li>
-    <li>fourth</li>
-
-   </ul>
+        })
 
 
-   <a>Hover: www.example.com</a>
-   <a target="_blank" href="http://google.com">visited: www.google.com</a>
-   <a target="_blank" href="http://google.com">visited: www.google.com</a>
-   <a target="_blank" href="http://google.com">visited: www.google.com</a>
-   <a target="_blank" href="http://google.com">visited: www.google.com</a>
-   <a target="_blank" href="http://google.com">visited: www.google.com</a>
-    
+      </script>
+
 </body>
 </html>
